@@ -44,6 +44,8 @@ test/                     테스트 (node:test)
 
 ## 실습 진행 (강의 섹션 7)
 
+> Claude Code CLI를 쓴다면 한 줄씩 따라 하는 가이드가 있습니다: [docs/practice-guide-claude-code.md](docs/practice-guide-claude-code.md)
+
 | 수업 | 할 일 | 시간 |
 | --- | --- | --- |
 | 7-1 | 이 README와 `docs/backlog.md` 읽기 | 5분 |
