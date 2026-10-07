@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 const PATTERNS = [
   { name: "하드코딩된 비밀번호", re: /(password|passwd|pwd)\s*[:=]\s*["'][^"']{4,}["']/i },
-  { name: "하드코딩된 비밀번호 비교", re: /===?\s*["'](admin|root|test)\w*["']/i },
+  { name: "하드코딩된 비밀번호 비교", re: /(password|passwd|pwd)\w*["'\])]*\s*[!=]==?\s*["'][^"']+["']/i },
   { name: "API 키 형태의 문자열", re: /(api[_-]?key|secret|token)\s*[:=]\s*["'][A-Za-z0-9_\-]{12,}["']/i },
   { name: "AWS 액세스 키", re: /AKIA[0-9A-Z]{16}/ },
 ];
