@@ -1,0 +1,90 @@
+openapi: 3.1.0
+info:
+  title: 스터디룸 예약 API
+  version: 1.0.0
+  description: 인증은 실습용 헤더(X-Member-Id, X-Role)로 단순화 — ADR-002
+paths:
+  /api/rooms:
+    get:
+      summary: 룸 목록
+      responses:
+        "200": { description: OK }
+  /api/reservations:
+    post:
+      summary: 예약 생성 (S1)
+      parameters:
+        - { $ref: "#/components/parameters/MemberId" }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ReservationRequest" }
+      responses:
+        "201": { description: 생성됨, content: { application/json: { schema: { $ref: "#/components/schemas/Reservation" } } } }
+        "400": { description: VALIDATION_ERROR }
+        "401": { description: UNAUTHORIZED }
+        "404": { description: ROOM_NOT_FOUND }
+        "409": { description: RESERVATION_CONFLICT }
+  /api/reservations/me:
+    get:
+      summary: 내 확정 예약 목록, 시작 시각 순 (S2)
+      parameters:
+        - { $ref: "#/components/parameters/MemberId" }
+      responses:
+        "200": { description: OK }
+        "401": { description: UNAUTHORIZED }
+  /api/reservations/{id}:
+    delete:
+      summary: 예약 취소 — 시작 60분 전까지 (S2)
+      parameters:
+        - { $ref: "#/components/parameters/MemberId" }
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204": { description: 취소됨 }
+        "401": { description: UNAUTHORIZED }
+        "403": { description: FORBIDDEN }
+        "404": { description: RESERVATION_NOT_FOUND }
+        "409": { description: ALREADY_CANCELLED }
+        "422": { description: CANCEL_DEADLINE_PASSED }
+  /api/admin/rooms/{roomId}/reservations:
+    get:
+      summary: 룸별 하루 확정 예약 현황 (S3)
+      parameters:
+        - { $ref: "#/components/parameters/MemberId" }
+        - { name: X-Role, in: header, required: true, schema: { type: string, enum: [admin] } }
+        - { name: roomId, in: path, required: true, schema: { type: string } }
+        - { name: date, in: query, required: true, schema: { type: string, format: date } }
+      responses:
+        "200": { description: OK }
+        "400": { description: VALIDATION_ERROR }
+        "403": { description: FORBIDDEN }
+        "404": { description: ROOM_NOT_FOUND }
+components:
+  parameters:
+    MemberId:
+      name: X-Member-Id
+      in: header
+      required: true
+      schema: { type: string }
+  schemas:
+    ReservationRequest:
+      type: object
+      required: [roomId, date, start, end]
+      properties:
+        roomId: { type: string, example: A }
+        date: { type: string, format: date, example: "2026-10-20" }
+        start: { type: string, pattern: "^\\d{2}:\\d{2}$", example: "14:00" }
+        end: { type: string, pattern: "^\\d{2}:\\d{2}$", example: "16:00" }
+    Reservation:
+      allOf:
+        - { $ref: "#/components/schemas/ReservationRequest" }
+        - type: object
+          properties:
+            id: { type: string, example: R-0001 }
+            memberId: { type: string }
+            status: { type: string, enum: [CONFIRMED, CANCELLED] }
+    Error:
+      type: object
+      properties:
+        code: { type: string }
+        message: { type: string }

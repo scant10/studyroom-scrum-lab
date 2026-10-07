@@ -19,3 +19,17 @@ export async function start(server: Server) {
 
   return { call, close: () => new Promise<void>((r) => server.close(() => r())) };
 }
+
+/** 테스트에서 움직일 수 있는 시계. 기본값은 2026-10-20 09:00 (KST). */
+export function fakeClock(iso = "2026-10-20T09:00:00+09:00") {
+  let current = new Date(iso);
+  return {
+    now: () => current,
+    set: (next: string) => {
+      current = new Date(next);
+    },
+  };
+}
+
+export const as = (memberId: string, role?: string): Record<string, string> =>
+  role ? { "x-member-id": memberId, "x-role": role } : { "x-member-id": memberId };
