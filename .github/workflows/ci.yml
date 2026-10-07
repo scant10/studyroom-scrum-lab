@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 테스트 (인수조건)
+        run: npm test
+      - name: 시크릿 검사
+        run: npm run check:secrets
+      - name: 타입 검사
+        run: npm install --no-package-lock --no-audit --no-fund && npm run typecheck
+      - name: PR 크기 제한 (400줄)
+        if: github.event_name == 'pull_request'
+        run: |
+          CHANGED=$(git diff --numstat origin/${{ github.base_ref }}...HEAD -- src test | awk '{s+=$1+$2} END {print s+0}')
+          echo "변경 줄 수: $CHANGED"
+          if [ "$CHANGED" -gt 400 ]; then
+            echo "PR이 400줄을 넘습니다. 스토리를 더 작게 나눠 주세요."
+            exit 1
+          fi
