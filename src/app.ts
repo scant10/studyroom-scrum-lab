@@ -13,7 +13,7 @@ export function createApp(_options: AppOptions = {}) {
   router.get("/health", () => ({ status: 200, body: { status: "ok" } }));
   router.get("/api/rooms", () => ({ status: 200, body: ROOMS }));
 
-  // TODO(실습): 백로그 S1~S3를 여기에 구현합니다. docs/backlog.md 참고.
+  // TODO(실습): 여기에 기능을 구현합니다.
 
   return createServer((req, res) => void router.handle(req, res));
 }
