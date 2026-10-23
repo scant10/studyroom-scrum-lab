@@ -506,6 +506,7 @@ git commit -m "retro: Try 2개를 팀 규칙에 반영"
 | --- | --- |
 | `claude: command not found` | 새 터미널을 열고 다시 확인. 그래도 안 되면 설치 경로가 PATH에 없는 것입니다 |
 | `npm test`에서 `.ts` 파일 오류 | Node.js 버전 확인 (`node -v`가 22.18 이상) |
+| `npm test`가 끝나지 않는다 | 테스트가 서버를 띄워 놓고 닫지 않은 것입니다. `Ctrl+C`로 멈추고 `node --test --test-force-exit --test-timeout=10000 "test/**/*.test.ts"`로 돌립니다. AI가 `package.json`의 test 명령을 바꿨어도 이 명령은 그대로 씁니다 |
 | `EADDRINUSE` (포트 사용 중) | 이미 서버가 떠 있습니다. `PORT=3001 npm start`처럼 다른 포트로 |
 | Claude가 계속 같은 오류에서 헛돈다 | `Esc`로 멈추고, 10분 넘게 헛돌면 인수조건이 모호하지 않은지 먼저 확인 |
 | Claude가 묻지도 않고 너무 많이 고친다 | `Shift+Tab`으로 manual mode나 plan mode로 바꾸기 |
