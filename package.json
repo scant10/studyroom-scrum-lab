@@ -2,9 +2,11 @@
   "name": "studyroom-scrum-lab",
   "version": "1.0.0",
   "private": true,
-  "description": "바이브 코딩, 팀으로 하면 왜 망할까? — 실습 템플릿 (스터디룸 예약 서비스)",
+  "description": "바이브 코딩 시대의 스크럼 — 90분 팀 스프린트 실습 저장소 (스터디룸 예약 서비스)",
   "type": "module",
-  "engines": { "node": ">=22.18" },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "start": "node src/server.ts",
     "dev": "node --watch src/server.ts",
