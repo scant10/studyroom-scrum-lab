@@ -5,7 +5,7 @@
 <title>스터디룸 스프린트 실습 가이드</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Nanum+Pen+Script&display=swap">
 <style>
 /* 배치: 위 고정 막대 + 왼쪽 목차(실습 순서) + 가운데 본문 한 줄 폭. 단계 하나가 한 화면. 강의 덱과 같은 주황 계열 */
 :root{
@@ -174,6 +174,34 @@ input.cell{width:100%;min-width:90px;font:inherit;font-size:14px;color:var(--ink
 input.cell::placeholder{color:var(--muted);opacity:.75;font-style:italic}
 input.cell:not(:placeholder-shown){border-style:solid;background:var(--panel)}
 input.cell:focus{outline:2px solid var(--accent);border-style:solid}
+
+/* 1-3 역할 포스트잇 · 화이트보드 */
+:root{--wb-bg:#FFFFFF;--wb-frame:#B9B2A9;--wb-line:#3B3F46;--wb-ink:#1F4F9A;--wb-red:#C0392B;--wb-tray:#8F877E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--wb-bg:#ECE9E4;--wb-frame:#5B534B;--wb-tray:#4A433C}}
+:root[data-theme="dark"]{--wb-bg:#ECE9E4;--wb-frame:#5B534B;--wb-tray:#4A433C}
+.hand{font-family:"Nanum Pen Script","Apple SD Gothic Neo",cursive}
+.stickies{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:14px 8px 18px}
+.sticky{position:relative;min-height:128px;padding:20px 12px 12px;color:#2A241C;box-shadow:0 6px 10px -4px rgba(0,0,0,.28),0 1px 2px rgba(0,0,0,.12);border-radius:2px 2px 10px 2px}
+.sticky::before{content:"";position:absolute;top:-7px;left:50%;width:46px;height:16px;transform:translateX(-50%) rotate(-3deg);background:rgba(255,255,255,.55);border:1px solid rgba(0,0,0,.06)}
+.sticky .role{font-size:12px;font-weight:700;letter-spacing:.02em;opacity:.75}
+.sticky .who{font-family:"Nanum Pen Script",cursive;font-size:34px;line-height:1.05;margin:2px 0 6px}
+.sticky .does{font-family:"Nanum Pen Script",cursive;font-size:19px;line-height:1.2}
+.s-y{background:#FFE58A;transform:rotate(-2deg)} .s-p{background:#FFC6D3;transform:rotate(1.5deg)}
+.s-g{background:#BFEBC9;transform:rotate(-1deg)} .s-b{background:#BFE0F7;transform:rotate(2deg)}
+.wb-wrap{overflow-x:auto;margin:0 0 18px}
+.wb{min-width:640px;background:var(--wb-bg);border:10px solid var(--wb-frame);border-radius:6px;padding:14px 16px 18px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);color:var(--wb-line);position:relative}
+.wb-goal{font-family:"Nanum Pen Script",cursive;font-size:30px;line-height:1.1;color:var(--wb-ink);padding:2px 4px 8px;border-bottom:2.5px solid var(--wb-line);border-radius:0 0 40% 60%/0 0 6px 4px}
+.wb-goal b{color:var(--wb-red);font-weight:400}
+.wb-cols{display:grid;grid-template-columns:repeat(5,1fr);min-height:210px}
+.wb-col{border-right:2.5px solid var(--wb-line);padding:6px 8px;position:relative}
+.wb-col:last-child{border-right:0}
+.wb-col h4{margin:0 0 10px;font-family:"Nanum Pen Script",cursive;font-weight:400;font-size:27px;color:var(--wb-line);text-align:center}
+.wb-col h4 small{display:block;font-size:19px;color:var(--wb-red);margin-top:-4px}
+.card{background:#FFE58A;color:#2A241C;padding:8px 8px 6px;box-shadow:0 4px 7px -3px rgba(0,0,0,.3);transform:rotate(-1.5deg);border-radius:1px 1px 6px 1px}
+.card .t{font-family:"Nanum Pen Script",cursive;font-size:23px;line-height:1.05}
+.card .n{display:inline-block;margin-top:4px;font-size:11.5px;font-weight:700;background:#FFFFFFAA;border-radius:9px;padding:1px 7px}
+.wb-cap{font-size:13px;color:var(--muted);margin:-8px 0 18px}
+@media (max-width:640px){.stickies{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 <header class="topbar">
@@ -425,21 +453,27 @@ npm test   # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 <p class="lead">역할을 정하고 보드를 그립니다. 이 두 가지가 정해져야 Planning을 바로 시작할 수 있습니다.</p>
 
 <h2>Step 1. 역할 정하기</h2>
-<pre data-where="보드" data-label="포스트잇에 이름 쓰기"><code>PO        민수   ← 무엇을 만들지 결정, 코딩 안 함
-SM        지영   ← 시간·보드·데일리 진행
-개발자 A  준호   ← Claude Code 로그인한 사람. 테스트 담당
-개발자 B  서연   ← 구현 담당</code></pre>
+<p>포스트잇 네 장에 역할과 이름을 써서 보드 옆에 붙입니다.</p>
+<div class="figure"><div class="stickies">
+<div class="sticky s-y"><div class="role">Product Owner</div><div class="who">민수</div><div class="does">무엇을 만들지 결정<br>리뷰에서 수락·거절<br>코딩은 안 함</div></div>
+<div class="sticky s-p"><div class="role">Scrum Master</div><div class="who">지영</div><div class="does">시간·보드 관리<br>데일리 진행<br>"리뷰부터!"</div></div>
+<div class="sticky s-g"><div class="role">개발자 A</div><div class="who">준호</div><div class="does">Claude Code 로그인<br>테스트 먼저 작성<br>B의 코드 리뷰</div></div>
+<div class="sticky s-b"><div class="role">개발자 B</div><div class="who">서연</div><div class="does">A의 테스트를<br>통과하게 구현<br>코드 설명 담당</div></div>
+</div></div>
 <p>개발자 A는 Claude Code에 로그인한 사람이 맡습니다(0-2). 이름은 예시입니다.</p>
 
 <h2>Step 2. 보드 그리기</h2>
 <p>화이트보드에 다섯 칸을 그리거나 GitHub 저장소의 <strong>Projects</strong> 탭에서 Board를 만듭니다.</p>
-<div class="figure"><div class="board">
-<div><b>To Do</b><span>S1 스터디룸 예약</span></div>
-<div><b>Spec Ready</b></div>
-<div><b>Building</b></div>
-<div><b>Review</b></div>
-<div><b>Done</b></div>
-</div></div>
+<div class="wb-wrap"><div class="wb" role="img" aria-label="화이트보드: 맨 위 Sprint Goal, 아래 To Do·Spec Ready·Building·Review(최대 3)·Done 다섯 칸, To Do에 S1 카드">
+<div class="wb-goal"><b>Sprint Goal:</b> 회원이 겹치지 않게 스터디룸을 예약할 수 있다</div>
+<div class="wb-cols">
+<div class="wb-col"><h4>To Do</h4><div class="card"><div class="t">S1 스터디룸 예약</div><span class="n">PO 민수</span></div></div>
+<div class="wb-col"><h4>Spec Ready</h4></div>
+<div class="wb-col"><h4>Building</h4></div>
+<div class="wb-col"><h4>Review<small>최대 3</small></h4></div>
+<div class="wb-col"><h4>Done</h4></div>
+</div></div></div>
+<p class="wb-cap">맨 위 Sprint Goal 줄은 자리만 남겨 두고, 2-1에서 PO가 이렇게 적습니다. 카드에는 담당자 이름을 붙입니다.</p>
 <div class="tbl"><table>
 <thead><tr><th>칸</th><th>카드가 이 칸으로 오는 때</th><th>가이드</th></tr></thead>
 <tbody>
@@ -458,6 +492,7 @@ SM        지영   ← 시간·보드·데일리 진행
 
 <h2>Step 1. PO: Sprint Goal 정하기</h2>
 <pre data-where="보드" data-label="보드 맨 위에 적기"><code>Sprint Goal: 회원이 겹치지 않게 스터디룸을 예약할 수 있다</code></pre>
+<div class="wb-wrap"><div class="wb" role="img" aria-label="화이트보드 맨 위에 적은 Sprint Goal"><div class="wb-goal" style="border-bottom:0;padding-bottom:2px"><b>Sprint Goal:</b> 회원이 겹치지 않게 스터디룸을 예약할 수 있다</div></div></div>
 
 <h2>Step 2. 개발자 A: Claude가 팀 규칙을 읽게 연결</h2>
 <p>팀 전원이 개발자 A의 화면을 같이 봅니다. 이 저장소의 팀 규칙은 <code>AGENTS.md</code>에 있습니다. Claude Code가 확실히 읽도록 <code>CLAUDE.md</code>에서 불러옵니다.</p>
