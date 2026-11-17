@@ -1,6 +1,6 @@
-# 스터디룸 예약 서비스 — 90분 팀 스프린트 실습 저장소
+# 스터디룸 예약 서비스 — 90분 팀 스프린트 자료 저장소
 
-> 1일 과정 「바이브 코딩 시대의 스크럼」 Part 6 실습 저장소
+> 1일 과정 「바이브 코딩 시대의 스크럼」 Part 6 실습 자료
 
 4~5명이 한 팀이 되어 스프린트 한 번을 끝까지 돌려 봅니다. 스터디룸 예약 서비스의 첫 스토리(S1)를 AI와 함께 **계획하고 → 만들고 → 리뷰하고 → 회고합니다.**
 
@@ -8,7 +8,9 @@
 
 > **저장소 주소: https://github.com/scant10/studyroom-scrum-lab**
 >
-> **진행은 실습 가이드를 보면서 합니다.** 이 저장소의 **`guide.html`을 더블클릭**하면 브라우저에 열립니다(인터넷 없이도 열림). 강사가 공유한 웹 링크로 열어도 같은 내용입니다. 단계 번호(0-1, 2-3 …) 순서대로 명령을 한 줄씩 복사해 따라 하세요. 이 README는 저장소 안내입니다.
+> **이 저장소는 자료 저장소입니다. 실습은 여기서 하지 않습니다.** `node lab.mjs start`가 만드는 작업 폴더(`~/scrum-labs/studyroom`)에서 합니다. 이 저장소에는 실습 가이드와 예시 답이 들어 있어서, 여기서 AI 도구를 열면 AI가 그것을 읽고 팀이 정할 답을 미리 채워 버립니다.
+>
+> **진행은 실습 가이드를 보면서 합니다.** `node lab.mjs guide`(또는 `guide.html` 더블클릭)로 브라우저에서 엽니다. 강사가 공유한 웹 링크로 열어도 같은 내용입니다. 단계 번호(0-1, 2-3 …) 순서대로 명령을 한 줄씩 복사해 따라 하세요.
 
 ## 준비물 (수업 전날 끝내 오세요)
 
@@ -19,34 +21,40 @@
 - `npm install`은 필요 없습니다. 외부 라이브러리 없이 Node.js 기본 기능만 씁니다
   (타입 검사 `npm run typecheck`를 쓰고 싶을 때만 `npm install`)
 
-## 실습 저장소 받기
+## 받기와 작업 폴더 만들기 (모두, 가이드 0-3)
 
-> **[Code] → [Download ZIP]으로 받지 마세요.** 정답 브랜치(`before`·`after`)와 git 기록이 빠집니다. 꼭 `git clone`으로 받습니다.
+> **[Code] → [Download ZIP]으로 받지 마세요.** 정답 브랜치(`before`·`after`)가 빠져서 작업 폴더를 만들 수 없습니다. 꼭 `git clone`으로 받습니다.
 
 ```bash
 git clone https://github.com/scant10/studyroom-scrum-lab.git
 cd studyroom-scrum-lab
+node lab.mjs start            # 작업 폴더 ~/scrum-labs/studyroom 을 만든다
 
-node -v               # v22.18.0 이상이면 OK
-git branch -a         # main, remotes/origin/before, remotes/origin/after 가 보이면 OK
-npm test              # 맨 아래 "pass 2"가 보이면 준비 완료
-npm start             # http://localhost:3000
-npm run check         # 테스트 + 시크릿 검사 (DoD 확인용)
+cd ~/scrum-labs/studyroom     # 여기부터는 작업 폴더
+git branch                    # main, before, after 세 개가 보이면 OK
+npm test                      # 맨 아래 "pass 2"가 보이면 준비 완료
 ```
+
+작업 폴더에는 시작 코드와 양식만 들어갑니다. 실습 가이드(`guide.html`), 복습용 가이드, 이 README는 들어가지 않습니다.
+**AI 도구(Claude Code 등)는 반드시 작업 폴더에서 엽니다.**
 
 ## 팀 저장소로 올리기 (팀 대표 1명, 가이드 1-1)
 
-이 저장소(scant10)에는 push할 수 없습니다. GitHub에서 빈 저장소 `studyroom`을 만든 뒤(Private, README·.gitignore 추가 체크 해제), clone한 폴더에서 실행합니다.
+GitHub에서 빈 저장소 `studyroom`을 만든 뒤(Private, README·.gitignore 추가 체크 해제), **작업 폴더에서** 실행합니다.
 
 ```bash
-git branch before origin/before
-git branch after origin/after
-git remote rename origin upstream
+cd ~/scrum-labs/studyroom
 git remote add origin https://github.com/<내아이디>/studyroom.git
 git push -u origin main before after
 ```
 
-팀원은 팀 저장소(`<내아이디>/studyroom`)를 clone해서 씁니다.
+팀원은 초대를 수락한 뒤, 이 자료 저장소 폴더에서 팀 저장소를 작업 폴더로 받습니다(가이드 1-2).
+
+```bash
+node lab.mjs join https://github.com/<대표아이디>/studyroom.git
+```
+
+`lab.mjs` 명령: `start`(작업 폴더 만들기, 다시 만들 때 `--force`), `join <주소>`(팀 저장소 받기), `guide`(가이드 열기), `where`(작업 폴더 위치).
 
 ## 90분은 이렇게 흘러갑니다
 
@@ -83,12 +91,12 @@ git push -u origin main before after
 ## 저장소 구조
 
 ```text
-guide.html                실습 가이드 (더블클릭해서 브라우저로 연다)
+guide.html                실습 가이드 (더블클릭해서 브라우저로 연다)  ※ 작업 폴더에는 들어가지 않음
+lab.mjs                   작업 폴더 도구 (start · join · guide)        ※ 작업 폴더에는 들어가지 않음
 AGENTS.md                 팀 AI 규칙 파일 (Planning에서 채우고, 회고에서 한 줄씩 더함)
-.claude/settings.json     Claude Code가 실습 가이드(guide.html, 복습용 가이드)를 읽지 못하게 막음
 docs/backlog.md           제품 백로그 S1~S4
 docs/templates/           AI 질문 프롬프트(01), 인수조건(02), 규칙 파일(03), DoD(04), 회고 KPT(05), ADR(06)
-docs/practice-guide-claude-code.md   혼자 복습용 가이드 (강의 당일에는 쓰지 않음)
+docs/practice-guide-claude-code.md   혼자 복습용 가이드 (강의 당일에는 쓰지 않음, 작업 폴더에는 들어가지 않음)
 src/app.ts                여기에 기능을 추가합니다
 src/http/router.ts        작은 라우터 (수정할 필요 없음)
 src/domain/rooms.ts       룸 A·B·C
@@ -114,9 +122,10 @@ test/                     테스트 (node:test)
 | `EADDRINUSE` (포트 3000 사용 중) | 서버가 이미 떠 있다. macOS·Linux는 `lsof -i :3000`으로 PID를 보고 `kill <PID>`, 또는 `PORT=3001 npm start` |
 | Windows에서 포트 3000 사용 중 | `netstat -ano`에서 `:3000` 줄 맨 끝의 PID를 보고 `taskkill //PID <PID> //F` (Git Bash) |
 | Windows에서 명령이 이상하게 동작 | PowerShell이 아니라 **Git Bash**에서 실행했는지 확인 |
-| `before`·`after` 브랜치가 없다 | ZIP으로 받은 것. `git clone`으로 다시 받는다 |
-| `remote origin already exists` | 가이드 1-1의 `git remote rename origin upstream`부터 다시 |
-| `Permission denied to ... scant10` | 강사 저장소에 push한 것. 팀 저장소를 origin으로 연결했는지 확인 |
+| `'before' 브랜치를 찾을 수 없습니다` | ZIP으로 받은 것. `git clone`으로 다시 받는다 |
+| `이미 있습니다: ~/scrum-labs/studyroom` | 이미 만든 것. 처음부터 다시 하려면 `node lab.mjs start --force` |
+| `Permission denied to ... scant10` | 자료 저장소 폴더에서 push한 것. `cd ~/scrum-labs/studyroom` 후 다시 |
+| AI가 가이드·예시 답을 읽었다 | 자료 저장소 폴더에서 AI를 연 것. 작업 폴더에서 다시 연다 |
 | push가 거절됨 (`fetch first`) | GitHub 저장소를 만들 때 README를 추가한 것. 빈 저장소로 다시 만든다 |
 | AI가 같은 오류에서 헛돈다 | `Esc`로 멈추고, 10분이 넘으면 인수조건이 모호하지 않은지 PO와 먼저 확인 |
 | AI가 테스트를 고쳤다 | `git checkout HEAD -- test/`로 되돌리고 "테스트 수정 금지"를 다시 말한다 |

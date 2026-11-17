@@ -265,7 +265,7 @@ input.cell:focus{outline:2px solid var(--accent);border-style:solid}
     <li>노트북: Node.js 22.18 이상, Git. Windows는 Git Bash를 씁니다(0-2)</li>
     <li>GitHub 계정 (팀원 모두)</li>
     <li>Claude Code 로그인 (팀에 <strong>최소 1명</strong>, 개발자 A 역할을 맡을 사람). Claude 유료 구독(Pro 이상)이나 Claude Console 계정이 필요합니다</li>
-    <li>실습 저장소: <a href="https://github.com/scant10/studyroom-scrum-lab" target="_blank" rel="noopener">github.com/scant10/studyroom-scrum-lab</a> (<code>git clone</code>으로 받습니다. 0-3)</li>
+    <li>실습 자료(자료 저장소): <a href="https://github.com/scant10/studyroom-scrum-lab" target="_blank" rel="noopener">github.com/scant10/studyroom-scrum-lab</a> (<code>git clone</code>으로 받은 뒤 <code>node lab.mjs start</code>로 작업 폴더를 만듭니다. 0-3)</li>
     <li>포스트잇과 펜, 또는 GitHub Projects</li>
   </ul>
 </template>
@@ -285,7 +285,16 @@ input.cell:focus{outline:2px solid var(--accent);border-style:solid}
 <li>비밀키·비밀번호 하드코딩이 없다</li>
 </ol>
 
-<h2>저장소에 들어 있는 것</h2>
+<h2>폴더 두 개: 자료 저장소와 작업 폴더</h2>
+<div class="tbl"><table>
+<thead><tr><th>폴더</th><th>들어 있는 것</th><th>AI 도구</th></tr></thead>
+<tbody>
+<tr><td><code>studyroom-scrum-lab</code><br>자료 저장소</td><td>실습 가이드, 복습용 가이드, 예시 답, 작업 폴더 도구(<code>lab.mjs</code>)</td><td><strong>열지 않습니다</strong></td></tr>
+<tr><td><code>~/scrum-labs/studyroom</code><br>작업 폴더</td><td>시작 코드와 양식만. 팀 저장소로 GitHub에 올라가는 폴더</td><td>여기서만 엽니다</td></tr>
+</tbody></table></div>
+<p>자료 저장소에서 AI를 열면 AI가 가이드와 예시 답을 먼저 읽고, 팀이 정할 답을 미리 채워 버립니다. 그래서 실습은 저장소 바깥의 작업 폴더에서 합니다.</p>
+
+<h2>작업 폴더에 들어 있는 것</h2>
 <div class="tbl"><table>
 <thead><tr><th>파일·폴더</th><th>쓰는 곳</th></tr></thead>
 <tbody>
@@ -299,7 +308,7 @@ input.cell:focus{outline:2px solid var(--accent);border-style:solid}
 <h2>이 가이드 읽는 법</h2>
 <p>각 단계 페이지는 같은 순서로 되어 있습니다. 누가·몇 분에, 할 일, 이렇게 되면 성공, 예시 화면, 막히면, 다음 단계입니다.</p>
 <div class="legend">
-<div><span class="where">터미널</span><p>저장소 폴더에서 입력합니다. 복사 버튼은 <code># →</code> 뒤 설명을 빼고 복사합니다.</p></div>
+<div><span class="where">터미널</span><p>작업 폴더(<code>~/scrum-labs/studyroom</code>)에서 입력합니다. <code>node lab.mjs</code> 명령만 자료 저장소 폴더에서 합니다. 복사 버튼은 <code># →</code> 뒤 설명을 빼고 복사합니다.</p></div>
 <div><span class="where where-ai">Claude Code</span><p>Claude Code 입력창(<code>&gt;</code>)에 붙여 넣는 문장입니다.</p></div>
 <div><span class="where where-gh">GitHub 웹</span><p>브라우저의 GitHub 화면에서 순서대로 누릅니다.</p></div>
 <div><span class="where where-board">보드</span><p>화이트보드·포스트잇 또는 GitHub Projects에서 합니다.</p></div>
@@ -358,18 +367,25 @@ claude             # → 브라우저가 열리면 로그인</code></pre>
 </template>
 
 <template data-id="0-3">
-<p class="lead">GitHub에서 실습 저장소를 받아 테스트를 한 번 돌려 봅니다. <code>pass 2</code>가 보이면 수업 전 준비는 끝입니다.</p>
+<p class="lead">GitHub에서 실습 자료를 받고, 실습할 작업 폴더를 만든 뒤 테스트를 한 번 돌려 봅니다. <code>pass 2</code>가 보이면 수업 전 준비는 끝입니다.</p>
 
-<h2>Step 1. GitHub에서 받기 (git clone)</h2>
-<p>실습 저장소 주소: <a href="https://github.com/scant10/studyroom-scrum-lab" target="_blank" rel="noopener">https://github.com/scant10/studyroom-scrum-lab</a></p>
-<pre data-where="터미널" data-label="저장소를 둘 폴더에서 (예: 홈 폴더)"><code>git clone https://github.com/scant10/studyroom-scrum-lab.git
+<h2>Step 1. 자료 저장소 받기 (git clone)</h2>
+<p>주소: <a href="https://github.com/scant10/studyroom-scrum-lab" target="_blank" rel="noopener">https://github.com/scant10/studyroom-scrum-lab</a></p>
+<pre data-where="터미널" data-label="홈 폴더에서"><code>cd ~
+git clone https://github.com/scant10/studyroom-scrum-lab.git
 cd studyroom-scrum-lab</code></pre>
-<div class="note warn"><b>GitHub 화면의 [Code] → [Download ZIP]은 쓰지 않습니다</b><p>ZIP으로 받으면 정답 브랜치(before·after)와 git 기록이 빠져서 디브리핑(5-3)과 따라잡기(6-1)를 할 수 없습니다. 꼭 <code>git clone</code>으로 받습니다.</p></div>
+<div class="note warn"><b>GitHub 화면의 [Code] → [Download ZIP]은 쓰지 않습니다</b><p>ZIP으로 받으면 정답 브랜치(before·after)가 빠져서 작업 폴더를 만들 수 없습니다. 꼭 <code>git clone</code>으로 받습니다.</p></div>
 
-<h2>Step 2. 브랜치와 테스트 확인</h2>
-<pre data-where="터미널"><code>git branch -a   # → main, remotes/origin/before, remotes/origin/after 가 보이면 OK
-npm test        # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
-<p><code>npm install</code>은 하지 않습니다. 외부 라이브러리를 쓰지 않는 저장소라 필요 없습니다.</p>
+<h2>Step 2. 작업 폴더 만들기</h2>
+<pre data-where="터미널" data-label="자료 저장소(studyroom-scrum-lab) 폴더에서"><code>node lab.mjs start   # → "작업 폴더를 만들었습니다"가 보이면 OK</code></pre>
+<p>홈 폴더 아래 <code>scrum-labs/studyroom</code>에 작업 폴더가 생깁니다. 시작 코드와 양식, 그리고 디브리핑용 <code>before</code>·<code>after</code> 브랜치만 들어 있고, 실습 가이드와 예시 답은 들어가지 않습니다.</p>
+<div class="note warn"><b>약속 하나 — AI 도구는 작업 폴더에서만</b><p>오늘 Claude Code(또는 다른 AI 도구)는 언제나 <code>~/scrum-labs/studyroom</code>에서 엽니다. 자료 저장소 폴더에서 열면 AI가 가이드와 예시 답을 먼저 읽어서 실습의 의미가 사라집니다.</p></div>
+
+<h2>Step 3. 작업 폴더에서 확인</h2>
+<pre data-where="터미널" data-label="작업 폴더에서"><code>cd ~/scrum-labs/studyroom
+git branch   # → after, before, main 세 개가 보이면 OK
+npm test     # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
+<p><code>npm install</code>은 하지 않습니다. 외부 라이브러리를 쓰지 않아 필요 없습니다.</p>
 
 <h2>예시 화면</h2>
 <pre data-out="실행 결과 예시" data-label="npm test 성공"><code>$ npm test
@@ -388,17 +404,18 @@ npm test        # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 <li><code>tests 2</code>는 테스트가 모두 2개 있다는 뜻입니다. 지금은 "서버가 뜨는가", "룸 목록이 나오는가"만 확인합니다.</li>
 <li><code>pass 2</code>, <code>fail 0</code>이면 준비 완료입니다. Node 버전에 따라 <code>ℹ</code> 대신 <code>#</code>로 시작할 수 있습니다. 숫자만 보면 됩니다.</li>
 </ol>
-<div class="note ok"><b>이렇게 되면 성공</b><p><code>pass 2</code>, <code>fail 0</code></p></div>
+<div class="note ok"><b>이렇게 되면 성공</b><ul><li><code>~/scrum-labs/studyroom</code> 폴더가 생겼다</li><li>그 폴더에서 <code>pass 2</code>, <code>fail 0</code></li></ul></div>
 <div class="note bad"><b>막히면</b><ul>
 <li><code>.ts</code> 파일 관련 오류 · Node 버전이 낮습니다. <code>node -v</code>가 22.18 이상인지 확인합니다.</li>
-<li><code>git branch -a</code>에 before·after가 없음 · ZIP으로 받은 것입니다. 그 폴더는 지우고 Step 1의 <code>git clone</code>으로 다시 받습니다.</li>
+<li><code>'before' 브랜치를 찾을 수 없습니다</code> · ZIP으로 받은 것입니다. 그 폴더는 지우고 Step 1의 <code>git clone</code>으로 다시 받습니다.</li>
+<li><code>이미 있습니다: ~/scrum-labs/studyroom</code> · 이미 만든 것입니다. 처음부터 다시 만들려면 <code>node lab.mjs start --force</code></li>
 <li><code>git: command not found</code> · Git이 없습니다. 0-2의 Step 2로 돌아가 설치합니다.</li>
 </ul></div>
 </template>
 
 <!-- ================= 섹션 1 ================= -->
 <template data-id="1-1">
-<p class="lead">팀 대표 한 명이 GitHub에 팀 저장소를 만들고 실습 저장소를 올립니다. 쉬는 시간에 끝내 두면 90분을 온전히 쓸 수 있습니다.</p>
+<p class="lead">팀 대표 한 명이 GitHub에 팀 저장소를 만들고 작업 폴더를 올립니다. 쉬는 시간에 끝내 두면 90분을 온전히 쓸 수 있습니다.</p>
 <p><a href="#l-6-1">늦어졌을 때</a>를 대비해 팀 저장소에 세 브랜치(main, before, after)를 모두 올립니다.</p>
 
 <h2>Step 1. GitHub에서 빈 저장소 만들기</h2>
@@ -409,20 +426,17 @@ npm test        # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 5. [Create repository]</code></pre>
 <div class="note warn"><b>4번을 꼭 지키세요</b><p>README를 추가하면 저장소가 비어 있지 않아서 다음 단계의 push가 거절됩니다.</p></div>
 
-<h2>Step 2. 받은 실습 저장소를 팀 저장소로 올리기</h2>
-<p>0-3에서 <code>git clone</code>한 폴더에서 합니다. 저장소를 만든 직후 화면에 나오는 주소(<code>https://github.com/내아이디/studyroom.git</code>)를 씁니다.</p>
-<pre data-where="터미널" data-label="대표 · studyroom-scrum-lab 폴더에서"><code>git branch before origin/before    # 정답 브랜치도 내 컴퓨터에 만든다
-git branch after origin/after
-git remote rename origin upstream  # 강사 저장소는 upstream 으로 이름을 바꿔 둔다
+<h2>Step 2. 작업 폴더를 팀 저장소로 올리기</h2>
+<p>0-3에서 만든 <strong>작업 폴더</strong>에서 합니다. 저장소를 만든 직후 화면에 나오는 주소(<code>https://github.com/내아이디/studyroom.git</code>)를 씁니다.</p>
+<pre data-where="터미널" data-label="대표 · 작업 폴더에서"><code>cd ~/scrum-labs/studyroom
 git remote add origin https://github.com/&lt;내아이디&gt;/studyroom.git
 git push -u origin main before after</code></pre>
-<p>강사 저장소(scant10)에는 push할 수 없으니, 팀 저장소를 <code>origin</code>으로 새로 연결하는 것입니다. <code>&lt;내아이디&gt;</code>는 내 GitHub 아이디로 바꿉니다. 처음 push하면 로그인 창이 뜹니다. 브라우저로 로그인하는 방식을 고르면 됩니다.</p>
+<p><code>&lt;내아이디&gt;</code>는 내 GitHub 아이디로 바꿉니다. 처음 push하면 로그인 창이 뜹니다. 브라우저로 로그인하는 방식을 고르면 됩니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>GitHub 저장소 페이지에 파일 목록이 보인다</li><li>왼쪽 위 브랜치 메뉴에 main · before · after가 있다</li></ul></div>
 <div class="note bad"><b>막히면</b><ul>
 <li><code>! [rejected] ... (fetch first)</code> · 저장소를 만들 때 README를 추가한 것입니다. 저장소를 지우고 다시 만들거나, 이름을 바꿔 새로 만듭니다.</li>
-<li><code>remote origin already exists</code> · 첫 줄들을 건너뛴 것입니다. <code>git remote rename origin upstream</code>부터 다시 합니다.</li>
-<li><code>fatal: a branch named 'before' already exists</code> · 이미 만든 것입니다. 다음 줄로 넘어갑니다.</li>
-<li><code>Permission denied ... scant10/studyroom-scrum-lab</code> · 강사 저장소로 push한 것입니다. <code>git remote -v</code>에서 origin이 내 팀 저장소인지 확인합니다.</li>
+<li><code>remote origin already exists</code> · 이미 연결한 것입니다. <code>git remote -v</code>로 주소를 확인하고, 틀렸으면 <code>git remote set-url origin &lt;주소&gt;</code></li>
+<li><code>Permission denied ... scant10/studyroom-scrum-lab</code> · 자료 저장소 폴더에서 push한 것입니다. <code>cd ~/scrum-labs/studyroom</code> 후 다시 합니다.</li>
 <li>비밀번호를 넣었는데 거절됨 · GitHub는 비밀번호 push를 받지 않습니다. 로그인 창에서 브라우저 로그인을 고르거나, Personal Access Token을 비밀번호 자리에 넣습니다.</li>
 </ul></div>
 </template>
@@ -437,14 +451,19 @@ git push -u origin main before after</code></pre>
 <h2>Step 2. 팀원: 초대 수락</h2>
 <p>메일 또는 GitHub 오른쪽 위 알림에서 <strong>Accept invitation</strong>을 누릅니다. 수락하지 않으면 나중에 push가 거절됩니다.</p>
 
-<h2>Step 3. 팀원: 받아서 테스트</h2>
-<pre data-where="터미널"><code>git clone https://github.com/&lt;대표아이디&gt;/studyroom.git
-cd studyroom
+<h2>Step 3. 팀원: 팀 저장소를 작업 폴더로 받기</h2>
+<p>0-3에서 만든 연습용 작업 폴더를 팀 저장소로 바꿉니다. <strong>자료 저장소 폴더</strong>에서 실행합니다.</p>
+<pre data-where="터미널" data-label="팀원 · 자료 저장소(studyroom-scrum-lab) 폴더에서"><code>cd ~/studyroom-scrum-lab
+node lab.mjs join https://github.com/&lt;대표아이디&gt;/studyroom.git
+
+cd ~/scrum-labs/studyroom
 npm test   # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
+<p>이제 팀원 모두의 작업 폴더가 같은 팀 저장소와 연결됩니다. 대표는 이 단계를 하지 않습니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>팀원 모두 초대를 수락했다</li><li>팀원 모두 <code>npm test</code>에서 <code>pass 2</code></li></ul></div>
 <div class="note info"><b>노트북 한 대로 하는 팀</b><p>GitHub가 낯설거나 노트북이 부족하면 대표 노트북 한 대로 진행해도 됩니다. 그때는 push·PR 단계를 건너뛰고 같은 화면을 보며 리뷰합니다. 섹션 3의 "한 대로 할 때" 상자를 따르세요.</p></div>
 <div class="note bad"><b>막히면</b><ul>
 <li><code>Repository not found</code> · 아직 초대를 수락하지 않았거나 아이디를 잘못 넣었습니다.</li>
+<li><code>이미 팀 저장소(...)와 연결돼 있습니다</code> · 이미 받은 것입니다. 그대로 씁니다.</li>
 <li>초대 메일이 안 옴 · <code>https://github.com/&lt;대표아이디&gt;/studyroom/invitations</code>에 직접 들어갑니다.</li>
 </ul></div>
 </template>
@@ -496,7 +515,7 @@ npm test   # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 
 <h2>Step 2. 개발자 A: Claude가 팀 규칙을 읽게 연결</h2>
 <p>팀 전원이 개발자 A의 화면을 같이 봅니다. 이 저장소의 팀 규칙은 <code>AGENTS.md</code>에 있습니다. Claude Code가 확실히 읽도록 <code>CLAUDE.md</code>에서 불러옵니다.</p>
-<pre data-where="터미널" data-label="개발자 A · 팀 저장소 폴더에서"><code>echo "@AGENTS.md" &gt; CLAUDE.md
+<pre data-where="터미널" data-label="개발자 A · 작업 폴더에서"><code>echo "@AGENTS.md" &gt; CLAUDE.md
 cat CLAUDE.md                 # → @AGENTS.md 한 줄이 보이면 OK</code></pre>
 
 <h2>Step 3. plan 모드로 Claude 열기</h2>
@@ -520,11 +539,8 @@ cat CLAUDE.md                 # → @AGENTS.md 한 줄이 보이면 OK</code></p
 회원으로서 날짜·시간을 골라 스터디룸을 예약하고 싶다.
 같은 룸·같은 시간에는 중복 예약이 안 된다.
 
-[이미 정해진 것] AGENTS.md, docs/backlog.md의 S1
-[읽을 파일] AGENTS.md, docs/backlog.md, src/ 만 읽어.
-guide.html과 docs/ 아래 다른 문서는 사람용 안내서라 읽지 마.</code></pre>
+[이미 정해진 것] AGENTS.md, docs/backlog.md의 S1</code></pre>
 <p>핵심은 "내가 답하기 전에는 코드를 쓰지 마"입니다. 이 줄이 없으면 Claude가 바로 코드를 쓰기 시작합니다.</p>
-<p><strong>[읽을 파일]</strong> 두 줄은 Claude가 저장소의 문서를 전부 읽지 않게 합니다. 실습 가이드(<code>guide.html</code>)와 복습용 가이드에는 예시 답과 스펙이 들어 있어서, Claude가 읽으면 팀이 정할 답을 미리 채워 버리고 시간도 오래 걸립니다. 저장소의 <code>.claude/settings.json</code>도 이 두 파일을 못 읽게 막아 둡니다.</p>
 
 <h2>예시 화면</h2>
 <pre data-out="실제 결과" data-label="Claude의 질문 25개 중 일부 (약 40초)"><code>docs/backlog.md, AGENTS.md, src/를 읽었습니다. 코드는 쓰지 않았습니다.
@@ -548,7 +564,7 @@ guide.html과 docs/ 아래 다른 문서는 사람용 안내서라 읽지 마.</
 <li>25개는 많습니다. 팀은 Claude가 짚은 우선순위 질문부터 답합니다. "중요한 7개만 다시 골라 줘"라고 해도 됩니다.</li>
 </ol>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>번호 붙은 질문 목록이 나왔다</li><li>파일은 하나도 바뀌지 않았다</li></ul></div>
-<div class="note bad"><b>막히면</b><ul><li>Claude가 질문 없이 코드를 쓰려 함 · <kbd>Esc</kbd>로 멈추고, 화면 아래가 plan mode인지 확인한 뒤 다시 붙여 넣습니다.</li><li>Claude가 <code>docs/templates/</code>나 다른 문서를 줄줄이 읽음 · <kbd>Esc</kbd>로 멈추고 "[읽을 파일]에 적은 것만 읽어"라고 다시 말합니다.</li></ul></div>
+<div class="note bad"><b>막히면</b><ul><li>Claude가 질문 없이 코드를 쓰려 함 · <kbd>Esc</kbd>로 멈추고, 화면 아래가 plan mode인지 확인한 뒤 다시 붙여 넣습니다.</li></ul></div>
 </template>
 
 <template data-id="2-3">
@@ -565,9 +581,7 @@ guide.html과 docs/ 아래 다른 문서는 사람용 안내서라 읽지 마.</
 6. 실패 응답 { code, message }
    겹침 409 RESERVATION_CONFLICT, 잘못된 시간 400, 없는 룸 404
 7. X-Member-Id 헤더로 식별, 없으면 401
-8. 요청 본문은 { roomId, date, startTime, endTime }
-
-다른 파일은 더 읽지 말고, 이 답으로 확정된 것과 남은 것만 정리해 줘.</code></pre>
+8. 요청 본문은 { roomId, date, startTime, endTime }</code></pre>
 <p>8번(요청 본문의 필드 이름)은 꼭 정합니다. 정하지 않으면 리뷰 시연(4-1)의 curl 명령이 팀마다 달라집니다.</p>
 <pre data-out="실제 결과" data-label="Claude의 응답 (일부)"><code>확정된 것
 - 30분 단위, 운영 09:00–22:00, 1회 최대 4시간, KST 기준입니다.
@@ -602,7 +616,6 @@ package.json의 check:secrets가 가리키는 scripts/check-secrets.mjs가 저�
 <pre data-where="Claude Code"><code>지금까지의 질문과 답을 docs/templates/02-story-acceptance.md 양식으로
 docs/specs/S1-reserve.md 에 정리해 줘.
 인수조건은 Given/When/Then 시나리오로.
-양식은 이 파일 하나만 읽고, 다른 템플릿·문서는 읽지 마.
 
 그리고 AGENTS.md 의 '반드시'와 '금지'를 3줄씩 채워 줘.
 '테스트를 고치거나 지워서 통과시키기 금지'는 꼭 넣어 줘.
@@ -1060,7 +1073,7 @@ git push</code></pre>
 <p class="lead">마지막 5분입니다. 우리 팀이 만든 결과를, 같은 백로그를 한 줄 프롬프트로 만든 <code>before</code>와 오늘 배운 방식으로 만든 <code>after</code>에 나란히 놓고 봅니다. 강의 슬라이드의 "실습 디브리핑 · 참고"와 같은 표입니다.</p>
 
 <h2>Step 1. 비교 문서 열기</h2>
-<pre data-where="터미널" data-label="대표 1명 · 팀 저장소 폴더"><code>git fetch
+<pre data-where="터미널" data-label="대표 1명 · 작업 폴더"><code>git fetch
 git show origin/after:docs/review/before-vs-after.md   # → 두 버전에 같은 요청을 보낸 결과표가 나온다</code></pre>
 <p>브랜치를 바꾸지 않고 문서만 화면에 띄우는 명령입니다. GitHub 웹에서 브랜치를 <code>after</code>로 바꾸고 <code>docs/review/before-vs-after.md</code>를 열어도 됩니다.</p>
 
@@ -1124,6 +1137,7 @@ npm run check   # → tests 29 · pass 29 · "시크릿 검사 통과"면 OK</co
 <tr><td><code>git pull</code>에서 충돌(CONFLICT)</td><td>같은 파일을 두 사람이 고쳤습니다. 충돌 난 파일을 Claude에게 보여 주고 "두 변경을 합쳐 줘"라고 하거나, SM이 강사를 부릅니다</td></tr>
 <tr><td><code>npm test</code>가 끝나지 않는다</td><td>AI가 쓴 테스트가 서버를 띄워 놓고 닫지 않은 것입니다. <kbd>Ctrl</kbd>+<kbd>C</kbd>로 멈추고 아래 명령으로 돌립니다. AI가 <code>package.json</code>의 test 명령을 바꿨어도 이 명령은 그대로 쓰면 됩니다.<br><code>node --test --test-force-exit --test-timeout=10000 "test/**/*.test.ts"</code></td></tr>
 <tr><td><code>EADDRINUSE</code> (포트 사용 중)</td><td>이미 서버가 떠 있습니다. <code>PORT=3001 npm start</code></td></tr>
+<tr><td>Claude가 가이드나 예시 답을 읽었다</td><td>자료 저장소 폴더에서 연 것입니다. <code>/exit</code> 후 <code>cd ~/scrum-labs/studyroom</code>에서 다시 엽니다</td></tr>
 <tr><td>Claude가 같은 오류에서 헛돈다</td><td><kbd>Esc</kbd>로 멈춥니다. 10분 넘게 헛돌면 인수조건이 모호하지 않은지 PO와 먼저 확인합니다</td></tr>
 <tr><td>Claude가 묻지도 않고 너무 많이 고친다</td><td><kbd>Shift</kbd>+<kbd>Tab</kbd>으로 plan 모드로 바꿉니다</td></tr>
 <tr><td>Claude가 테스트를 고쳤다</td><td><code>git checkout HEAD -- test/</code>로 되돌리고 "테스트는 수정 금지"를 다시 말합니다</td></tr>
@@ -1144,15 +1158,15 @@ npm run check   # → tests 29 · pass 29 · "시크릿 검사 통과"면 OK</co
 </template>
 
 <script>
-const DATA = {"course": "스터디룸 예약, 90분 스프린트", "versions": [["Node.js", "22.18 이상"], ["실습 저장소", "github.com/scant10/studyroom-scrum-lab"], ["팀", "4~5명"], ["실습", "90분"]],
+const DATA = {"course": "스터디룸 예약, 90분 스프린트", "versions": [["Node.js", "22.18 이상"], ["자료 저장소", "github.com/scant10/studyroom-scrum-lab"], ["작업 폴더", "~/scrum-labs/studyroom"], ["팀", "4~5명"], ["실습", "90분"]],
 "sections": [
  {"no": "0", "title": "수업 전날 준비", "min": 30, "lectures": [
   {"id": "0-1", "title": "오늘 실습 한눈에", "kind": "혼자", "min": 5, "sum": "무엇을 만들고 어떻게 읽나"},
   {"id": "0-2", "title": "내 노트북 준비", "kind": "모두 · Claude Code는 팀 1명 이상", "min": 15, "sum": "Node · Git · GitHub · Claude Code"},
-  {"id": "0-3", "title": "실습 저장소 받아 테스트", "kind": "모두", "min": 10, "sum": "npm test에서 pass 2"}]},
+  {"id": "0-3", "title": "자료 받고 작업 폴더 만들기", "kind": "모두", "min": 10, "sum": "작업 폴더에서 pass 2"}]},
  {"no": "1", "title": "팀 준비", "min": 10, "lectures": [
   {"id": "1-1", "title": "팀 저장소 만들기", "kind": "대표 1명", "min": 4, "sum": "GitHub에 세 브랜치 push"},
-  {"id": "1-2", "title": "팀원 초대와 clone", "kind": "대표 → 팀원", "min": 4, "sum": "모두 pass 2"},
+  {"id": "1-2", "title": "팀원 초대와 받기", "kind": "대표 → 팀원", "min": 4, "sum": "모두 작업 폴더에서 pass 2"},
   {"id": "1-3", "title": "역할과 보드", "kind": "팀 전체", "min": 2, "sum": "PO · SM · 개발자 A · B"}]},
  {"no": "2", "title": "Sprint Planning", "min": 15, "lectures": [
   {"id": "2-1", "title": "Sprint Goal과 plan 모드", "kind": "PO · 개발자 A", "min": 3, "sum": "0–3분", "clock": "0–3분"},
