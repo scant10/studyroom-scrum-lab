@@ -355,7 +355,7 @@ claude             # → 브라우저가 열리면 로그인</code></pre>
 <thead><tr><th>조작</th><th>하는 일</th><th>언제 쓰나</th></tr></thead>
 <tbody>
 <tr><td><kbd>Esc</kbd></td><td>Claude가 하던 일을 멈춘다</td><td>엉뚱한 방향으로 갈 때 바로</td></tr>
-<tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>권한 모드를 바꾼다. 지금 모드는 화면 아래에 나온다</td><td>Planning 4/5에서 plan → accept edits</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>권한 모드를 바꾼다. 지금 모드는 화면 아래에 나온다</td><td>Planning 2-4에서 plan → 기본 모드(표시 없음)</td></tr>
 <tr><td><code>/exit</code></td><td>Claude Code를 끝낸다</td><td>결과를 터미널에서 확인하기 전</td></tr>
 </tbody></table></div>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>Node가 22.18 이상, Git 설치됨</li><li>GitHub에 로그인할 수 있다</li><li>(팀 1명 이상) <code>claude --version</code>이 나오고 로그인까지 끝났다</li></ul></div>
@@ -581,7 +581,11 @@ cat CLAUDE.md                 # → @AGENTS.md 한 줄이 보이면 OK</code></p
 6. 실패 응답 { code, message }
    겹침 409 RESERVATION_CONFLICT, 잘못된 시간 400, 없는 룸 404
 7. X-Member-Id 헤더로 식별, 없으면 401
-8. 요청 본문은 { roomId, date, startTime, endTime }</code></pre>
+8. 요청 본문은 { roomId, date, startTime, endTime }
+
+구현 계획은 세우지 마. 위 답으로 확정된 것과 아직 남은 것만 정리하고 멈춰.</code></pre>
+<p>마지막 줄이 중요합니다. plan 모드의 Claude는 대화가 끝나면 <strong>구현 계획</strong>을 세워 승인을 받으려 합니다. 그 계획을 승인하면 바로 코드를 쓰기 시작합니다. 지금은 계획이 아니라 <strong>결정 정리</strong>만 받습니다.</p>
+<div class="note warn"><b>"Would you like to proceed?" 창이 뜨면</b><p>Claude가 계획 승인 창을 띄우면 <strong>Yes를 고르지 않습니다.</strong> Yes(특히 auto-accept edits)를 고르면 그 계획대로 구현을 시작합니다. <strong>No, keep planning</strong>을 고르거나 <kbd>Esc</kbd>를 누른 뒤 다음 단계(2-4)로 넘어갑니다.</p></div>
 <p>8번(요청 본문의 필드 이름)은 꼭 정합니다. 정하지 않으면 리뷰 시연(4-1)의 curl 명령이 팀마다 달라집니다.</p>
 <pre data-out="실제 결과" data-label="Claude의 응답 (일부)"><code>확정된 것
 - 30분 단위, 운영 09:00–22:00, 1회 최대 4시간, KST 기준입니다.
@@ -609,8 +613,9 @@ package.json의 check:secrets가 가리키는 scripts/check-secrets.mjs가 저�
 <template data-id="2-4">
 <p class="lead">이제 질문과 답을 파일로 남깁니다. Claude가 양식의 빈칸을 채워 스펙 파일을 만들고, 팀 규칙 파일도 채웁니다.</p>
 
-<h2>Step 1. 파일 수정을 허용하는 모드로 바꾸기</h2>
-<p><kbd>Shift</kbd>+<kbd>Tab</kbd>을 눌러 화면 아래가 <code>⏵⏵ accept edits on</code>으로 바뀌게 합니다. 한 번에 안 바뀌면 한 번 더 누릅니다.</p>
+<h2>Step 1. 기본 모드로 바꾸기 (파일마다 허락받기)</h2>
+<p>입력창이 비어 있고 Claude가 멈춰 있을 때 <kbd>Shift</kbd>+<kbd>Tab</kbd>을 눌러 화면 아래의 <code>⏸ plan mode on</code> 표시가 <strong>사라지게</strong> 합니다. <code>⏵⏵ accept edits on</code>이 보이면 표시가 없어질 때까지 더 누릅니다.</p>
+<p>표시가 없는 기본 모드에서는 Claude가 파일을 쓸 때마다 허락을 묻습니다. 그래서 스펙만 쓰고 멈춰야 할 때 Claude가 코드까지 쓰는 것을 팀이 막을 수 있습니다. accept edits 모드는 묻지 않고 쓰기 때문에 이 단계에서는 쓰지 않습니다.</p>
 
 <h2>Step 2. 스펙과 규칙 파일 쓰게 하기</h2>
 <pre data-where="Claude Code"><code>지금까지의 질문과 답을 docs/templates/02-story-acceptance.md 양식으로
@@ -619,7 +624,17 @@ docs/specs/S1-reserve.md 에 정리해 줘.
 
 그리고 AGENTS.md 의 '반드시'와 '금지'를 3줄씩 채워 줘.
 '테스트를 고치거나 지워서 통과시키기 금지'는 꼭 넣어 줘.
-코드는 아직 쓰지 마.</code></pre>
+
+이 두 파일만 쓰고 멈춰. src/와 test/는 만들지도 고치지도 마.
+구현은 다음 단계에서 따로 요청할게.</code></pre>
+<h2>Step 3. 허락 창에서 고르기</h2>
+<div class="tbl"><table>
+<thead><tr><th>Claude가 쓰려는 파일</th><th>고르는 것</th></tr></thead>
+<tbody>
+<tr><td><code>docs/specs/S1-reserve.md</code>, <code>AGENTS.md</code></td><td><strong>Yes</strong> (내용을 훑어보고)</td></tr>
+<tr><td><code>src/</code>나 <code>test/</code> 아래 파일</td><td><strong>No</strong>, 그리고 "스펙과 규칙 파일까지만 쓰기로 했어. 멈춰."</td></tr>
+</tbody></table></div>
+<p>"Yes, and don't ask again"은 고르지 않습니다. 고르면 그다음부터 묻지 않아서 코드까지 써 버릴 수 있습니다.</p>
 <p>'테스트를 고치거나 지워서 통과시키기 금지'는 Build 단계의 안전장치가 됩니다(3-4).</p>
 
 <h2>예시 화면 ① 스펙 파일</h2>
@@ -660,8 +675,9 @@ docs/specs/S1-reserve.md 에 정리해 줘.
 <li>'금지'에 테스트 수정 금지가 들어갔는지 확인합니다. 이번에는 "틀렸다면 사람에게 확인받는다"까지 붙었습니다.</li>
 <li>짧을수록 좋습니다. 길면 AI도 사람도 읽지 않습니다.</li>
 </ol>
-<div class="note ok"><b>이렇게 되면 성공</b><ul><li><code>docs/specs/S1-reserve.md</code> 파일이 생겼다</li><li><code>AGENTS.md</code>의 반드시·금지가 채워졌다</li><li><code>src</code> 폴더의 코드는 그대로다</li></ul></div>
-<div class="note bad"><b>막히면</b><ul><li>Claude가 "plan 모드라 파일을 쓸 수 없다"고 함 · <kbd>Shift</kbd>+<kbd>Tab</kbd>을 다시 눌러 accept edits로 바꾸고 "계속해 줘"라고 입력합니다.</li></ul></div>
+<div class="note ok"><b>이렇게 되면 성공</b><ul><li><code>docs/specs/S1-reserve.md</code> 파일이 생겼다</li><li><code>AGENTS.md</code>의 반드시·금지가 채워졌다</li><li><code>git status</code>에 <code>docs/specs/</code>와 <code>AGENTS.md</code>만 보이고 <code>src</code>·<code>test</code>는 그대로다</li></ul></div>
+<div class="note bad"><b>막히면</b><ul><li>Claude가 "plan 모드라 파일을 쓸 수 없다"고 함 · <kbd>Shift</kbd>+<kbd>Tab</kbd>을 눌러 화면 아래 표시가 없는 기본 모드로 바꾸고 "계속해 줘"라고 입력합니다.</li>
+<li>Claude가 스펙을 쓰고 바로 구현을 시작함 · 허락 창에서 No를 고르거나 <kbd>Esc</kbd>로 멈춥니다. 이미 코드가 생겼다면 터미널에서 <code>git checkout -- src test</code>와 <code>git clean -fd src test</code>로 되돌립니다.</li></ul></div>
 </template>
 
 <template data-id="2-5">
