@@ -237,7 +237,7 @@ input.cell:focus{outline:2px solid var(--accent);border-style:solid}
     <li>노트북: Node.js 22.18 이상, Git. Windows는 Git Bash를 씁니다(0-2)</li>
     <li>GitHub 계정 (팀원 모두)</li>
     <li>Claude Code 로그인 (팀에 <strong>최소 1명</strong>, 개발자 A 역할을 맡을 사람). Claude 유료 구독(Pro 이상)이나 Claude Console 계정이 필요합니다</li>
-    <li>실습 저장소 <code>studyroom-scrum-lab.zip</code> (수업 자료로 받습니다)</li>
+    <li>실습 저장소: <a href="https://github.com/scant10/studyroom-scrum-lab" target="_blank" rel="noopener">github.com/scant10/studyroom-scrum-lab</a> (<code>git clone</code>으로 받습니다. 0-3)</li>
     <li>포스트잇과 펜, 또는 GitHub Projects</li>
   </ul>
 </template>
@@ -330,16 +330,17 @@ claude             # → 브라우저가 열리면 로그인</code></pre>
 </template>
 
 <template data-id="0-3">
-<p class="lead">실습 저장소를 풀고 테스트를 한 번 돌려 봅니다. <code>pass 2</code>가 보이면 수업 전 준비는 끝입니다.</p>
+<p class="lead">GitHub에서 실습 저장소를 받아 테스트를 한 번 돌려 봅니다. <code>pass 2</code>가 보이면 수업 전 준비는 끝입니다.</p>
 
-<h2>Step 1. 압축 풀고 들어가기</h2>
-<pre data-where="터미널" data-label="zip을 받은 폴더에서"><code>unzip studyroom-scrum-lab.zip
+<h2>Step 1. GitHub에서 받기 (git clone)</h2>
+<p>실습 저장소 주소: <a href="https://github.com/scant10/studyroom-scrum-lab" target="_blank" rel="noopener">https://github.com/scant10/studyroom-scrum-lab</a></p>
+<pre data-where="터미널" data-label="저장소를 둘 폴더에서 (예: 홈 폴더)"><code>git clone https://github.com/scant10/studyroom-scrum-lab.git
 cd studyroom-scrum-lab</code></pre>
-<p><code>unzip</code>이 없다고 나오면 파일 탐색기(Finder)에서 zip을 더블클릭해 풀고, 터미널에서 <code>cd</code>로 그 폴더에 들어갑니다.</p>
+<div class="note warn"><b>GitHub 화면의 [Code] → [Download ZIP]은 쓰지 않습니다</b><p>ZIP으로 받으면 정답 브랜치(before·after)와 git 기록이 빠져서 디브리핑(5-3)과 따라잡기(6-1)를 할 수 없습니다. 꼭 <code>git clone</code>으로 받습니다.</p></div>
 
 <h2>Step 2. 브랜치와 테스트 확인</h2>
-<pre data-where="터미널"><code>git branch   # → main, before, after 세 개가 보이면 OK
-npm test     # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
+<pre data-where="터미널"><code>git branch -a   # → main, remotes/origin/before, remotes/origin/after 가 보이면 OK
+npm test        # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 <p><code>npm install</code>은 하지 않습니다. 외부 라이브러리를 쓰지 않는 저장소라 필요 없습니다.</p>
 
 <h2>예시 화면</h2>
@@ -362,7 +363,8 @@ npm test     # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 <div class="note ok"><b>이렇게 되면 성공</b><p><code>pass 2</code>, <code>fail 0</code></p></div>
 <div class="note bad"><b>막히면</b><ul>
 <li><code>.ts</code> 파일 관련 오류 · Node 버전이 낮습니다. <code>node -v</code>가 22.18 이상인지 확인합니다.</li>
-<li><code>git branch</code>에 main만 보임 · zip이 아니라 다른 경로로 받은 저장소입니다. 수업 자료의 zip을 다시 받습니다.</li>
+<li><code>git branch -a</code>에 before·after가 없음 · ZIP으로 받은 것입니다. 그 폴더는 지우고 Step 1의 <code>git clone</code>으로 다시 받습니다.</li>
+<li><code>git: command not found</code> · Git이 없습니다. 0-2의 Step 2로 돌아가 설치합니다.</li>
 </ul></div>
 </template>
 
@@ -379,15 +381,20 @@ npm test     # → 맨 아래 "pass 2"가 보이면 OK</code></pre>
 5. [Create repository]</code></pre>
 <div class="note warn"><b>4번을 꼭 지키세요</b><p>README를 추가하면 저장소가 비어 있지 않아서 다음 단계의 push가 거절됩니다.</p></div>
 
-<h2>Step 2. 실습 저장소를 연결하고 올리기</h2>
-<p>저장소를 만든 직후 화면에 나오는 주소(<code>https://github.com/내아이디/studyroom.git</code>)를 씁니다.</p>
-<pre data-where="터미널" data-label="studyroom-scrum-lab 폴더에서"><code>git remote add origin https://github.com/&lt;내아이디&gt;/studyroom.git
+<h2>Step 2. 받은 실습 저장소를 팀 저장소로 올리기</h2>
+<p>0-3에서 <code>git clone</code>한 폴더에서 합니다. 저장소를 만든 직후 화면에 나오는 주소(<code>https://github.com/내아이디/studyroom.git</code>)를 씁니다.</p>
+<pre data-where="터미널" data-label="대표 · studyroom-scrum-lab 폴더에서"><code>git branch before origin/before    # 정답 브랜치도 내 컴퓨터에 만든다
+git branch after origin/after
+git remote rename origin upstream  # 강사 저장소는 upstream 으로 이름을 바꿔 둔다
+git remote add origin https://github.com/&lt;내아이디&gt;/studyroom.git
 git push -u origin main before after</code></pre>
-<p><code>&lt;내아이디&gt;</code>는 내 GitHub 아이디로 바꿉니다. 처음 push하면 로그인 창이 뜹니다. 브라우저로 로그인하는 방식을 고르면 됩니다.</p>
+<p>강사 저장소(scant10)에는 push할 수 없으니, 팀 저장소를 <code>origin</code>으로 새로 연결하는 것입니다. <code>&lt;내아이디&gt;</code>는 내 GitHub 아이디로 바꿉니다. 처음 push하면 로그인 창이 뜹니다. 브라우저로 로그인하는 방식을 고르면 됩니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>GitHub 저장소 페이지에 파일 목록이 보인다</li><li>왼쪽 위 브랜치 메뉴에 main · before · after가 있다</li></ul></div>
 <div class="note bad"><b>막히면</b><ul>
 <li><code>! [rejected] ... (fetch first)</code> · 저장소를 만들 때 README를 추가한 것입니다. 저장소를 지우고 다시 만들거나, 이름을 바꿔 새로 만듭니다.</li>
-<li><code>remote origin already exists</code> · <code>git remote set-url origin https://github.com/&lt;내아이디&gt;/studyroom.git</code>으로 바꿉니다.</li>
+<li><code>remote origin already exists</code> · 첫 줄들을 건너뛴 것입니다. <code>git remote rename origin upstream</code>부터 다시 합니다.</li>
+<li><code>fatal: a branch named 'before' already exists</code> · 이미 만든 것입니다. 다음 줄로 넘어갑니다.</li>
+<li><code>Permission denied ... scant10/studyroom-scrum-lab</code> · 강사 저장소로 push한 것입니다. <code>git remote -v</code>에서 origin이 내 팀 저장소인지 확인합니다.</li>
 <li>비밀번호를 넣었는데 거절됨 · GitHub는 비밀번호 push를 받지 않습니다. 로그인 창에서 브라우저 로그인을 고르거나, Personal Access Token을 비밀번호 자리에 넣습니다.</li>
 </ul></div>
 </template>
@@ -1096,7 +1103,7 @@ npm run check   # → tests 29 · pass 29 · "시크릿 검사 통과"면 OK</co
 </template>
 
 <script>
-const DATA = {"course": "스터디룸 예약, 90분 스프린트", "versions": [["Node.js", "22.18 이상"], ["실습 저장소", "studyroom-scrum-lab"], ["팀", "4~5명"], ["실습", "90분"]],
+const DATA = {"course": "스터디룸 예약, 90분 스프린트", "versions": [["Node.js", "22.18 이상"], ["실습 저장소", "github.com/scant10/studyroom-scrum-lab"], ["팀", "4~5명"], ["실습", "90분"]],
 "sections": [
  {"no": "0", "title": "수업 전날 준비", "min": 30, "lectures": [
   {"id": "0-1", "title": "오늘 실습 한눈에", "kind": "혼자", "min": 5, "sum": "무엇을 만들고 어떻게 읽나"},

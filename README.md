@@ -6,6 +6,8 @@
 
 목표는 기능 개수가 아닙니다. **S1 스토리 하나를 DoD(완료의 정의)까지** 끝내는 것입니다.
 
+> **저장소 주소: https://github.com/scant10/studyroom-scrum-lab**
+>
 > **진행은 실습 가이드를 보면서 합니다.** 이 저장소의 **`guide.html`을 더블클릭**하면 브라우저에 열립니다(인터넷 없이도 열림). 강사가 공유한 웹 링크로 열어도 같은 내용입니다. 단계 번호(0-1, 2-3 …) 순서대로 명령을 한 줄씩 복사해 따라 하세요. 이 README는 저장소 안내입니다.
 
 ## 준비물 (수업 전날 끝내 오세요)
@@ -17,12 +19,34 @@
 - `npm install`은 필요 없습니다. 외부 라이브러리 없이 Node.js 기본 기능만 씁니다
   (타입 검사 `npm run typecheck`를 쓰고 싶을 때만 `npm install`)
 
+## 실습 저장소 받기
+
+> **[Code] → [Download ZIP]으로 받지 마세요.** 정답 브랜치(`before`·`after`)와 git 기록이 빠집니다. 꼭 `git clone`으로 받습니다.
+
 ```bash
-git branch            # main, before, after 세 개가 보이면 OK
+git clone https://github.com/scant10/studyroom-scrum-lab.git
+cd studyroom-scrum-lab
+
+node -v               # v22.18.0 이상이면 OK
+git branch -a         # main, remotes/origin/before, remotes/origin/after 가 보이면 OK
 npm test              # 맨 아래 "pass 2"가 보이면 준비 완료
 npm start             # http://localhost:3000
 npm run check         # 테스트 + 시크릿 검사 (DoD 확인용)
 ```
+
+## 팀 저장소로 올리기 (팀 대표 1명, 가이드 1-1)
+
+이 저장소(scant10)에는 push할 수 없습니다. GitHub에서 빈 저장소 `studyroom`을 만든 뒤(Private, README·.gitignore 추가 체크 해제), clone한 폴더에서 실행합니다.
+
+```bash
+git branch before origin/before
+git branch after origin/after
+git remote rename origin upstream
+git remote add origin https://github.com/<내아이디>/studyroom.git
+git push -u origin main before after
+```
+
+팀원은 팀 저장소(`<내아이디>/studyroom`)를 clone해서 씁니다.
 
 ## 90분은 이렇게 흘러갑니다
 
@@ -89,6 +113,9 @@ test/                     테스트 (node:test)
 | `EADDRINUSE` (포트 3000 사용 중) | 서버가 이미 떠 있다. macOS·Linux는 `lsof -i :3000`으로 PID를 보고 `kill <PID>`, 또는 `PORT=3001 npm start` |
 | Windows에서 포트 3000 사용 중 | `netstat -ano`에서 `:3000` 줄 맨 끝의 PID를 보고 `taskkill //PID <PID> //F` (Git Bash) |
 | Windows에서 명령이 이상하게 동작 | PowerShell이 아니라 **Git Bash**에서 실행했는지 확인 |
+| `before`·`after` 브랜치가 없다 | ZIP으로 받은 것. `git clone`으로 다시 받는다 |
+| `remote origin already exists` | 가이드 1-1의 `git remote rename origin upstream`부터 다시 |
+| `Permission denied to ... scant10` | 강사 저장소에 push한 것. 팀 저장소를 origin으로 연결했는지 확인 |
 | push가 거절됨 (`fetch first`) | GitHub 저장소를 만들 때 README를 추가한 것. 빈 저장소로 다시 만든다 |
 | AI가 같은 오류에서 헛돈다 | `Esc`로 멈추고, 10분이 넘으면 인수조건이 모호하지 않은지 PO와 먼저 확인 |
 | AI가 테스트를 고쳤다 | `git checkout HEAD -- test/`로 되돌리고 "테스트 수정 금지"를 다시 말한다 |
