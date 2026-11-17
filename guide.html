@@ -202,6 +202,26 @@ input.cell:focus{outline:2px solid var(--accent);border-style:solid}
 .card .n{display:inline-block;margin-top:4px;font-size:11.5px;font-weight:700;background:#FFFFFFAA;border-radius:9px;padding:1px 7px}
 .wb-cap{font-size:13px;color:var(--muted);margin:-8px 0 18px}
 @media (max-width:640px){.stickies{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* 보드 이동 · KPT 보드 */
+.wb.compact .wb-cols{min-height:150px}
+.wb.compact .wb-goal{font-size:24px;padding-bottom:6px}
+.wb.compact .wb-col h4{font-size:23px;margin-bottom:8px}
+.card .who{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.card .who span{font-size:11px;font-weight:700;background:#FFFFFFB3;border-radius:9px;padding:1px 7px}
+.card.now{outline:3px solid var(--wb-red);outline-offset:4px;border-radius:2px 2px 8px 2px}
+.card.done{background:#BFEBC9}
+.card.ghost{background:transparent;border:2px dashed #A9A39B;box-shadow:none;transform:none;color:#8C857D}
+.card.ghost .t{font-size:19px}
+.mv{font-family:"Nanum Pen Script",cursive;color:var(--wb-red);font-size:21px;text-align:center;margin-top:8px}
+.kpt-cols{display:grid;grid-template-columns:repeat(3,1fr);min-height:230px}
+.kpt-cols .wb-col{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.kpt-cols .wb-col h4 small{color:var(--wb-line);opacity:.7}
+.note-k,.note-p,.note-t{padding:9px 10px;color:#2A241C;font-family:"Nanum Pen Script",cursive;font-size:20px;line-height:1.15;box-shadow:0 4px 7px -3px rgba(0,0,0,.3);border-radius:1px 1px 7px 1px}
+.note-k{background:#BFEBC9}.note-p{background:#FFC6D3}.note-t{background:#FFE58A}
+.wb-col>div:nth-of-type(odd){transform:rotate(-1.2deg)}.wb-col>div:nth-of-type(even){transform:rotate(1deg)}
+.note-t b{font-family:var(--f-body);font-size:11px;font-weight:700;display:inline-block;background:#FFFFFFB3;border-radius:9px;padding:0 6px;margin-right:4px;vertical-align:2px}
+.arrow-down{font-family:"Nanum Pen Script",cursive;color:var(--wb-red);font-size:20px;text-align:center;margin-top:auto}
 </style>
 
 <header class="topbar">
@@ -703,8 +723,8 @@ git push                       # → GitHub에 올라간다</code></pre>
 <pre data-where="터미널" data-label="다른 팀원"><code>git pull   # → 같은 스펙·규칙을 받는다</code></pre>
 
 <h2>Step 3. SM: 보드 옮기기</h2>
-<pre data-where="보드"><code>S1 카드 → Spec Ready
-카드에 적기:  테스트 — 준호 / 구현 — 서연 / 리뷰 — 준호</code></pre>
+<div class="wb-wrap"><div class="wb compact" role="img" aria-label="보드: S1 카드를 To Do에서 Spec Ready로 옮긴다"><div class="wb-goal"><b>Sprint Goal:</b> 회원이 겹치지 않게 스터디룸을 예약할 수 있다</div><div class="wb-cols"><div class="wb-col"><h4>To Do</h4><div class="card ghost"><div class="t">S1</div></div></div><div class="wb-col"><h4>Spec Ready</h4><div class="card now"><div class="t">S1 스터디룸 예약</div><div class="who"><span>테스트 준호</span><span>구현 서연</span><span>리뷰 준호</span></div></div><div class="mv">← 여기로 옮김</div></div><div class="wb-col"><h4>Building</h4></div><div class="wb-col"><h4>Review<small>최대 3</small></h4></div><div class="wb-col"><h4>Done</h4></div></div></div></div>
+<p class="wb-cap">S1 카드를 Spec Ready로 옮기고, 카드에 테스트·구현·리뷰 담당 이름을 적습니다.</p>
 <p>리뷰는 구현하지 않은 사람이 합니다. 여기서는 테스트를 쓴 개발자 A입니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>GitHub 저장소에 <code>docs/specs/S1-reserve.md</code>가 보인다</li><li>S1 카드가 Spec Ready 칸에 있고 이름이 붙었다</li></ul></div>
 </template>
@@ -789,7 +809,8 @@ git commit -m "test: S1 인수조건 (Red)"
 git push -u origin s1   # → GitHub에 s1 브랜치가 생긴다</code></pre>
 
 <h2>Step 3. SM: 보드 옮기기</h2>
-<pre data-where="보드"><code>S1 카드 → Building    "구현 — 서연"</code></pre>
+<div class="wb-wrap"><div class="wb compact" role="img" aria-label="보드: S1 카드를 Spec Ready에서 Building로 옮긴다"><div class="wb-goal"><b>Sprint Goal:</b> 회원이 겹치지 않게 스터디룸을 예약할 수 있다</div><div class="wb-cols"><div class="wb-col"><h4>To Do</h4></div><div class="wb-col"><h4>Spec Ready</h4><div class="card ghost"><div class="t">S1</div></div></div><div class="wb-col"><h4>Building</h4><div class="card now"><div class="t">S1 스터디룸 예약</div><div class="who"><span>구현 서연</span><span>테스트 Red ✓</span></div></div><div class="mv">← 여기로 옮김</div></div><div class="wb-col"><h4>Review<small>최대 3</small></h4></div><div class="wb-col"><h4>Done</h4></div></div></div></div>
+<p class="wb-cap">테스트가 올라갔으니 Building으로 옮깁니다. 지금 손을 쓰는 사람은 구현 담당 서연입니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>새 테스트가 대부분 실패한다</li><li>GitHub의 s1 브랜치에 테스트만 들어간 커밋이 있다</li></ul></div>
 <div class="note bad"><b>막히면</b><ul><li>테스트가 전부 통과함 · 테스트가 실제로 아무것도 검사하지 않는 것입니다. Claude에게 "각 시나리오의 Then을 assert로 검사하는지 확인해 줘"라고 요청합니다.</li><li>문법 오류로 테스트가 아예 실행되지 않음 · 오류 메시지를 Claude에게 붙여 넣고 "테스트 파일의 문법 오류만 고쳐 줘"라고 합니다.</li></ul></div>
 </template>
@@ -930,7 +951,8 @@ To https://github.com/&lt;팀&gt;/studyroom.git
 </ol>
 
 <h2>Step 2. SM: 보드 옮기기</h2>
-<pre data-where="보드"><code>S1 카드 → Review    "리뷰 — 준호"</code></pre>
+<div class="wb-wrap"><div class="wb compact" role="img" aria-label="보드: S1 카드를 Building에서 Review로 옮긴다"><div class="wb-goal"><b>Sprint Goal:</b> 회원이 겹치지 않게 스터디룸을 예약할 수 있다</div><div class="wb-cols"><div class="wb-col"><h4>To Do</h4></div><div class="wb-col"><h4>Spec Ready</h4></div><div class="wb-col"><h4>Building</h4><div class="card ghost"><div class="t">S1</div></div></div><div class="wb-col"><h4>Review<small>최대 3</small></h4><div class="card now"><div class="t">S1 스터디룸 예약</div><div class="who"><span>리뷰 준호</span><span>PR #1</span></div></div><div class="mv">← 여기로 옮김</div></div><div class="wb-col"><h4>Done</h4></div></div></div></div>
+<p class="wb-cap">PR이 열렸으니 Review로 옮깁니다. Review 칸이 3장 차면 SM이 "리뷰부터!"라고 외칩니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>PR 화면에 <strong>Files changed</strong> 탭이 보인다</li><li>리뷰어로 개발자 A가 지정됐다</li></ul></div>
 </template>
 
@@ -969,7 +991,8 @@ To https://github.com/&lt;팀&gt;/studyroom.git
 <pre data-where="터미널" data-label="팀원 모두"><code>git switch main &amp;&amp; git pull &amp;&amp; npm run check   # → 초록불이면 OK</code></pre>
 
 <h2>Step 4. SM: 보드 옮기기</h2>
-<pre data-where="보드"><code>S1 카드 → Done</code></pre>
+<div class="wb-wrap"><div class="wb compact" role="img" aria-label="보드: S1 카드를 Review에서 Done로 옮긴다"><div class="wb-goal"><b>Sprint Goal:</b> 회원이 겹치지 않게 스터디룸을 예약할 수 있다</div><div class="wb-cols"><div class="wb-col"><h4>To Do</h4></div><div class="wb-col"><h4>Spec Ready</h4></div><div class="wb-col"><h4>Building</h4></div><div class="wb-col"><h4>Review<small>최대 3</small></h4><div class="card ghost"><div class="t">S1</div></div></div><div class="wb-col"><h4>Done</h4><div class="card now done"><div class="t">S1 스터디룸 예약 ✓</div><div class="who"><span>설명 ✓</span><span>승인 ✓</span><span>머지 ✓</span></div></div><div class="mv">← 여기로 옮김</div></div></div></div></div>
+<p class="wb-cap">설명·승인·머지가 끝나야 Done입니다. 하나라도 빠지면 Review에 그대로 둡니다.</p>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>B가 겹침 로직을 자기 말로 설명했다</li><li>PR이 Merged 상태다</li><li>모두의 main에서 <code>npm run check</code> 초록불</li><li>PR 본문의 DoD 체크가 모두 체크됐고, 완료 단계가 "완료됨"이다</li></ul></div>
 <div class="note warn"><b>B가 설명하지 못하면</b><p>승인하지 않습니다. 이해될 때까지 Claude에게 묻습니다. 그래도 모르면 그 코드는 아직 "동작함"이지 "완료됨"이 아닙니다. 리뷰에서는 그 상태 그대로 보여 주면 됩니다.</p></div>
 </template>
@@ -1039,12 +1062,20 @@ npm start       # → "스터디룸 예약 서비스: http://localhost:3000"</co
 </tbody></table></div>
 
 <h2>예시 화면</h2>
-<pre data-out="KPT 예시" data-label="이번 실행을 돌아보며 강사가 쓴 것"><code>KEEP    질문에 답해 두니 맞닿음·401이 처음부터 테스트에 들어갔다
-        테스트를 먼저 올려 두니 git diff로 테스트 수정 여부를 바로 확인했다
-PROBLEM AI가 "check-secrets.mjs가 없다"고 했는데 확인 없이 스펙에 남겼다
-        스펙의 "아직 확정되지 않은 것"이 남았는데 구현까지 갔다
-TRY     1. 파일이 없다고 판단하면 확인한 명령과 결과를 함께 보여 준다
-        2. 인수조건이 확정되지 않은 스토리는 구현하지 않는다</code></pre>
+<div class="wb-wrap"><div class="wb" role="img" aria-label="회고 보드: Keep, Problem, Try 세 칸에 포스트잇">
+<div class="wb-goal">회고 · Sprint 1 <span style="font-size:20px;color:var(--wb-line)">(강사가 이번 실행을 돌아보며 쓴 예시)</span></div>
+<div class="kpt-cols">
+<div class="wb-col"><h4>Keep<small>효과 있었던 것</small></h4>
+<div class="note-k">질문에 답해 두니 맞닿음·401이 처음부터 테스트에 들어갔다</div>
+<div class="note-k">테스트를 먼저 올려 두니 git diff로 테스트 수정 여부를 바로 확인했다</div></div>
+<div class="wb-col"><h4>Problem<small>막혔던 것</small></h4>
+<div class="note-p">AI가 "check-secrets.mjs가 없다"고 했는데 확인 없이 스펙에 남겼다</div>
+<div class="note-p">"아직 확정되지 않은 것"이 남았는데 구현까지 갔다</div></div>
+<div class="wb-col"><h4>Try<small>다음에 바꿀 행동 2개</small></h4>
+<div class="note-t"><b>Try 1</b>파일이 없다고 판단하면 확인한 명령과 결과를 함께 보여 준다</div>
+<div class="note-t"><b>Try 2</b>인수조건이 확정되지 않은 스토리는 구현하지 않는다</div>
+<div class="arrow-down">↓ 5-2에서 AGENTS.md에 커밋</div></div>
+</div></div></div>
 <p class="looklabel">여기를 보세요</p>
 <ol class="look">
 <li>Problem의 "확인 없이 스펙에 남겼다"가 Try 1번이 됐습니다. 사람도 AI도 지킬 수 있는 행동입니다.</li>
