@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./guide.html)",
+      "Read(./docs/practice-guide-claude-code.md)"
+    ]
+  }
+}

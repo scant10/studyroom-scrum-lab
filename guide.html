@@ -520,8 +520,11 @@ cat CLAUDE.md                 # → @AGENTS.md 한 줄이 보이면 OK</code></p
 회원으로서 날짜·시간을 골라 스터디룸을 예약하고 싶다.
 같은 룸·같은 시간에는 중복 예약이 안 된다.
 
-[이미 정해진 것] AGENTS.md, docs/backlog.md의 S1</code></pre>
+[이미 정해진 것] AGENTS.md, docs/backlog.md의 S1
+[읽을 파일] AGENTS.md, docs/backlog.md, src/ 만 읽어.
+guide.html과 docs/ 아래 다른 문서는 사람용 안내서라 읽지 마.</code></pre>
 <p>핵심은 "내가 답하기 전에는 코드를 쓰지 마"입니다. 이 줄이 없으면 Claude가 바로 코드를 쓰기 시작합니다.</p>
+<p><strong>[읽을 파일]</strong> 두 줄은 Claude가 저장소의 문서를 전부 읽지 않게 합니다. 실습 가이드(<code>guide.html</code>)와 복습용 가이드에는 예시 답과 스펙이 들어 있어서, Claude가 읽으면 팀이 정할 답을 미리 채워 버리고 시간도 오래 걸립니다. 저장소의 <code>.claude/settings.json</code>도 이 두 파일을 못 읽게 막아 둡니다.</p>
 
 <h2>예시 화면</h2>
 <pre data-out="실제 결과" data-label="Claude의 질문 25개 중 일부 (약 40초)"><code>docs/backlog.md, AGENTS.md, src/를 읽었습니다. 코드는 쓰지 않았습니다.
@@ -545,7 +548,7 @@ cat CLAUDE.md                 # → @AGENTS.md 한 줄이 보이면 OK</code></p
 <li>25개는 많습니다. 팀은 Claude가 짚은 우선순위 질문부터 답합니다. "중요한 7개만 다시 골라 줘"라고 해도 됩니다.</li>
 </ol>
 <div class="note ok"><b>이렇게 되면 성공</b><ul><li>번호 붙은 질문 목록이 나왔다</li><li>파일은 하나도 바뀌지 않았다</li></ul></div>
-<div class="note bad"><b>막히면</b><ul><li>Claude가 질문 없이 코드를 쓰려 함 · <kbd>Esc</kbd>로 멈추고, 화면 아래가 plan mode인지 확인한 뒤 다시 붙여 넣습니다.</li></ul></div>
+<div class="note bad"><b>막히면</b><ul><li>Claude가 질문 없이 코드를 쓰려 함 · <kbd>Esc</kbd>로 멈추고, 화면 아래가 plan mode인지 확인한 뒤 다시 붙여 넣습니다.</li><li>Claude가 <code>docs/templates/</code>나 다른 문서를 줄줄이 읽음 · <kbd>Esc</kbd>로 멈추고 "[읽을 파일]에 적은 것만 읽어"라고 다시 말합니다.</li></ul></div>
 </template>
 
 <template data-id="2-3">
@@ -562,7 +565,9 @@ cat CLAUDE.md                 # → @AGENTS.md 한 줄이 보이면 OK</code></p
 6. 실패 응답 { code, message }
    겹침 409 RESERVATION_CONFLICT, 잘못된 시간 400, 없는 룸 404
 7. X-Member-Id 헤더로 식별, 없으면 401
-8. 요청 본문은 { roomId, date, startTime, endTime }</code></pre>
+8. 요청 본문은 { roomId, date, startTime, endTime }
+
+다른 파일은 더 읽지 말고, 이 답으로 확정된 것과 남은 것만 정리해 줘.</code></pre>
 <p>8번(요청 본문의 필드 이름)은 꼭 정합니다. 정하지 않으면 리뷰 시연(4-1)의 curl 명령이 팀마다 달라집니다.</p>
 <pre data-out="실제 결과" data-label="Claude의 응답 (일부)"><code>확정된 것
 - 30분 단위, 운영 09:00–22:00, 1회 최대 4시간, KST 기준입니다.
@@ -597,6 +602,7 @@ package.json의 check:secrets가 가리키는 scripts/check-secrets.mjs가 저�
 <pre data-where="Claude Code"><code>지금까지의 질문과 답을 docs/templates/02-story-acceptance.md 양식으로
 docs/specs/S1-reserve.md 에 정리해 줘.
 인수조건은 Given/When/Then 시나리오로.
+양식은 이 파일 하나만 읽고, 다른 템플릿·문서는 읽지 마.
 
 그리고 AGENTS.md 의 '반드시'와 '금지'를 3줄씩 채워 줘.
 '테스트를 고치거나 지워서 통과시키기 금지'는 꼭 넣어 줘.

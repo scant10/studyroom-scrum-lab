@@ -85,6 +85,7 @@ git push -u origin main before after
 ```text
 guide.html                실습 가이드 (더블클릭해서 브라우저로 연다)
 AGENTS.md                 팀 AI 규칙 파일 (Planning에서 채우고, 회고에서 한 줄씩 더함)
+.claude/settings.json     Claude Code가 실습 가이드(guide.html, 복습용 가이드)를 읽지 못하게 막음
 docs/backlog.md           제품 백로그 S1~S4
 docs/templates/           AI 질문 프롬프트(01), 인수조건(02), 규칙 파일(03), DoD(04), 회고 KPT(05), ADR(06)
 docs/practice-guide-claude-code.md   혼자 복습용 가이드 (강의 당일에는 쓰지 않음)
